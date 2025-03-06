@@ -1,6 +1,8 @@
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private RaycastHit rightHit;
     private RaycastHit leftHit;
+
     private void Awake()
     {
         inputManager.OnMove.AddListener(MovePlayer);
@@ -71,6 +74,13 @@ public class PlayerController : MonoBehaviour
         col.material = angle > 45 ? smooth : rough;
     }
 
+       public void UpdatePlayerMaxSpeed(float speed)
+    {
+          Debug.Log($"Slider Updated: Received speed = {speed}");
+    maxSpeed = speed;
+    Debug.Log($"New maxSpeed = {maxSpeed}");
+    }
+
     private bool IsTouchingGround() => Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.1f, groundLayer);
 
     private void MovePlayer(Vector2 dirn)
@@ -113,8 +123,5 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
     }
 
-    public void UpdatePlayerMaxSpeed(float speed)
-    {
-        maxSpeed = speed;
-    }
+
 }
